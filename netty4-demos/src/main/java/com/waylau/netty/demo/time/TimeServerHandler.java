@@ -7,8 +7,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class TimeServerHandler extends ChannelInboundHandlerAdapter {
-	
-	@Override
+
+    @Override
     public void channelActive(final ChannelHandlerContext ctx) { // (1)
         final ByteBuf time = ctx.alloc().buffer(4); // (2)
         time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));

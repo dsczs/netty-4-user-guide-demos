@@ -19,7 +19,7 @@ public final class TelnetClient {
 
     static final boolean SSL = System.getProperty("ssl") != null;
     static final String HOST = System.getProperty("host", "127.0.0.1");
-    static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8992" : "8023"));
+    static final int PORT = Integer.parseInt(System.getProperty("port", SSL ? "8992" : "8023"));
 
     public static void main(String[] args) throws Exception {
         // Configure SSL.
@@ -34,8 +34,8 @@ public final class TelnetClient {
         try {
             Bootstrap b = new Bootstrap();
             b.group(group)
-             .channel(NioSocketChannel.class)
-             .handler(new TelnetClientInitializer(sslCtx));
+                    .channel(NioSocketChannel.class)
+                    .handler(new TelnetClientInitializer(sslCtx));
 
             // Start the connection attempt.
             Channel ch = b.connect(HOST, PORT).sync().channel();
@@ -43,7 +43,7 @@ public final class TelnetClient {
             // Read commands from the stdin.
             ChannelFuture lastWriteFuture = null;
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            for (;;) {
+            for (; ; ) {
                 String line = in.readLine();
                 if (line == null) {
                     break;

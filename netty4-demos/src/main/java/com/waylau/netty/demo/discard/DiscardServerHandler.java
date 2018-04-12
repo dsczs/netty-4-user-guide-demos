@@ -24,17 +24,17 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
 	        ReferenceCountUtil.release(msg);
 	    }
         */
-        
-	    ByteBuf in = (ByteBuf) msg;
-	    try {
-	        while (in.isReadable()) { // (1)
-	            System.out.print((char) in.readByte());
-	            System.out.flush();
-	        }
-	    } finally {
-	        ReferenceCountUtil.release(msg); // (2)
-	    }
-        
+
+        ByteBuf in = (ByteBuf) msg;
+        try {
+            while (in.isReadable()) { // (1)
+                System.out.print((char) in.readByte());
+                System.out.flush();
+            }
+        } finally {
+            ReferenceCountUtil.release(msg); // (2)
+        }
+
     }
 
     @Override

@@ -18,15 +18,26 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class FactorialClientHandler extends SimpleChannelInboundHandler<BigInteger> {
 
+    final BlockingQueue<BigInteger> answer = new LinkedBlockingQueue<BigInteger>();
     private ChannelHandlerContext ctx;
     private int receivedMessages;
     private int next = 1;
-    final BlockingQueue<BigInteger> answer = new LinkedBlockingQueue<BigInteger>();
+    private final ChannelFutureListener numberSender = new ChannelFutureListener() {
+        @Override
+        public void operationComplete(ChannelFuture future) throws Exception {
+            if (future.isSuccess()) {
+                sendNumbers();
+            } else {
+                future.cause().printStackTrace();
+                future.channel().close();
+            }
+        }
+    };
 
     public BigInteger getFactorial() {
         boolean interrupted = false;
         try {
-            for (;;) {
+            for (; ; ) {
                 try {
                     return answer.take();
                 } catch (InterruptedException ignore) {
@@ -47,7 +58,7 @@ public class FactorialClientHandler extends SimpleChannelInboundHandler<BigInteg
     }
 
     public void messageReceived(ChannelHandlerContext ctx, final BigInteger msg) {
-        receivedMessages ++;
+        receivedMessages++;
         if (receivedMessages == FactorialClient.COUNT) {
             // Offer the answer after closing the connection.
             ctx.channel().close().addListener(new ChannelFutureListener() {
@@ -80,22 +91,10 @@ public class FactorialClientHandler extends SimpleChannelInboundHandler<BigInteg
         ctx.flush();
     }
 
-    private final ChannelFutureListener numberSender = new ChannelFutureListener() {
-        @Override
-        public void operationComplete(ChannelFuture future) throws Exception {
-            if (future.isSuccess()) {
-                sendNumbers();
-            } else {
-                future.cause().printStackTrace();
-                future.channel().close();
-            }
-        }
-    };
+    @Override
+    protected void channelRead0(ChannelHandlerContext arg0, BigInteger arg1)
+            throws Exception {
+        // TODO Auto-generated method stub
 
-	@Override
-	protected void channelRead0(ChannelHandlerContext arg0, BigInteger arg1)
-			throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 }
