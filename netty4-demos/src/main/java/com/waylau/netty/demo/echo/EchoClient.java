@@ -15,6 +15,7 @@ import io.netty.handler.codec.string.StringEncoder;
  * data to the server.  Simply put, the echo client initiates the ping-pong
  * traffic between the echo client and server by sending the first message to
  * the server.
+ * @author Administrator
  */
 public final class EchoClient {
 

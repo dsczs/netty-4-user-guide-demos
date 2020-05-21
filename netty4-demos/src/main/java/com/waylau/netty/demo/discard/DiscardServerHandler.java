@@ -7,6 +7,7 @@ import io.netty.util.ReferenceCountUtil;
 
 /**
  * 处理服务端 channel.
+ * @author Administrator
  */
 public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
 

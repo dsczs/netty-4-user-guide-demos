@@ -5,6 +5,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * 处理服务端 channel.
+ * @author Administrator
  */
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 

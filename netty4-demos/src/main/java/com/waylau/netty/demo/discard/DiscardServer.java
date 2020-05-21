@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
  * 丢弃任何进入的数据
+ * @author Administrator
  */
 public class DiscardServer {
 
